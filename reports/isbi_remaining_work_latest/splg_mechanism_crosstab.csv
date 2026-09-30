@@ -1,0 +1,9 @@
+feature_arm,feature_arm_label,negative_curvature_coefficient,out_of_training_range_pole,reversal,folds
+non_stability,Base,False,False,False,31
+non_stability,Base,False,True,False,26
+non_stability,Base,True,True,False,2
+non_stability,Base,True,True,True,1
+non_stability_e1_e2,+Stability,False,False,False,30
+non_stability_e1_e2,+Stability,False,True,False,28
+non_stability_e1_e2,+Stability,True,False,False,1
+non_stability_e1_e2,+Stability,True,True,False,1

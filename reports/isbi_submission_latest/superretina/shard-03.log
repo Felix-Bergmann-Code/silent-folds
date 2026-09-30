@@ -1,0 +1,9 @@
+{"python_version": "3.11.11", "torch_version": "2.3.1+cu121", "opencv_version": "4.10.0", "numpy_version": "1.26.4", "weights_sha256": "df9d28098d1d95347f96c6a2a425db3f9ab1683778173a22eca96f0e863758cf", "device": "cuda:0", "matching_trick": true}
+[superretina shard 3] 25/189 (12s)
+[superretina shard 3] 50/189 (25s)
+[superretina shard 3] 75/189 (39s)
+[superretina shard 3] 100/189 (51s)
+[superretina shard 3] 125/189 (66s)
+[superretina shard 3] 150/189 (103s)
+[superretina shard 3] 175/189 (145s)
+[superretina shard 3] 189/189 (168s)

@@ -1,0 +1,45 @@
+.DS_Store
+.venv/
+.pipeline-envs/
+vendor/
+checkpoints/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Restricted/local datasets and generated caches are never committed by default.
+/data/
+/cache/
+/study_outputs/
+/full_study_outputs/
+
+# Generated outputs are ignored selectively; reviewed protocol files remain tracked.
+paper/figures/*
+paper/tables/*
+
+# Local review panels contain dataset pixels and are never redistributed.
+/reports/geometry_overlays/
+
+# Raw per-stage transcripts of a local run; the reviewed summary stays tracked.
+/reports/study_runs/
+
+# Failure gallery panels contain dataset pixels; the ledger stays tracked.
+/reports/failure_gallery/
+
+# Local extension evidence and reviewed locks; release aggregates deliberately.
+/conference_outputs/
+
+# Reproducible delivery archives are generated locally from tracked sources.
+/output/source/
+
+# Resumable benchmark job shards and smoke runs are local execution caches.
+# Consolidated benchmark tables, metadata, contracts, and figures stay tracked.
+/benchmark_pole_outputs/cases/
+/benchmark_pole_outputs_smoke/
+/benchmark_pole_outputs_smoke_workers16/

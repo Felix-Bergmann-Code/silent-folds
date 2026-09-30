@@ -1,0 +1,9 @@
+{
+  "experiment": "clearance",
+  "bootstrap_resamples": 2000,
+  "assignments": 21,
+  "original_seed": 20260907,
+  "clearance_floor": 0.001,
+  "clearance_ceiling": 1000.0,
+  "seconds": 65.13740348815918
+}

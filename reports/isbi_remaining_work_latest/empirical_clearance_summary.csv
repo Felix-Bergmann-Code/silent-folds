@@ -1,0 +1,3 @@
+pipeline,pipeline_label,returned_homographies,crossing_poles,noncrossing_homographies,nearest_failed_clearance,nearest_successful_clearance,clearance_le_0p05_cases,clearance_le_0p05_failures,clearance_le_0p1_cases,clearance_le_0p1_failures,clearance_le_0p25_cases,clearance_le_0p25_failures,clearance_le_0p5_cases,clearance_le_0p5_failures,clearance_le_1p0_cases,clearance_le_1p0_failures
+sp_lg_h,SP/LG-H,618,10,608,0.0310047262208426,2.2437867894942647,2,2,3,3,10,10,15,15,30,30
+xfeat_h,XFeat-H,625,2,623,0.1510099002821047,0.9681658420634728,0,0,0,0,2,2,7,7,19,18

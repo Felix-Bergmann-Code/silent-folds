@@ -1,0 +1,27 @@
+{
+  "cases": [
+    {
+      "job_id": "a3b2e2934c364e2a",
+      "pair_id": "COph100/055-1/055_M_GA38_BW3245_PA42_DG13_PF0_D1_S03_2__055_M_GA38_BW3245_PA78_DG13_PF0_D1_S09_16",
+      "denominator_crosses_inscribed_circular_fov": false,
+      "image_width": 640,
+      "image_height": 480,
+      "circle_radius_px": 239.5,
+      "line_distance_from_circle_center_px": 369.7820864729096,
+      "line_chord_length_in_circle_px": 0.0,
+      "chord_fraction_of_circle_diameter": 0.0
+    },
+    {
+      "job_id": "11bcaf81af6206b4",
+      "pair_id": "COph100/055/055_M_GA38_BW3245_PA43_DG13_PF0_D1_S04_13__055_M_GA38_BW3245_PA78_DG13_PF0_D1_S09_6",
+      "denominator_crosses_inscribed_circular_fov": true,
+      "image_width": 640,
+      "image_height": 480,
+      "circle_radius_px": 239.5,
+      "line_distance_from_circle_center_px": 188.7473268195375,
+      "line_chord_length_in_circle_px": 294.8538391710625,
+      "chord_fraction_of_circle_diameter": 0.6155612508790448
+    }
+  ],
+  "note": "The circle is an explicit conservative geometric proxy for the fundus field of view."
+}

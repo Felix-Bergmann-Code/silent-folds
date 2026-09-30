@@ -1,0 +1,12 @@
+{
+  "revision": "1-exploratory-development-decision",
+  "outer_folds": 5,
+  "transfer_modes": ["within_pipeline", "held_out_pipeline"],
+  "primary_pipelines": ["xfeat_h", "sp_lg_h"],
+  "bootstrap_resamples": 2000,
+  "stable_quantile": 0.25,
+  "stable_feature": "E1:seed_only_spread_mean",
+  "meaningful_brier_improvement": 0.01,
+  "external_evidence_status": "not_verified",
+  "eligibility": "both classes in training, calibration, and every fixed inner training/validation fold; otherwise not_estimable; no split retries"
+}

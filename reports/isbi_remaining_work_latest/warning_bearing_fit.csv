@@ -1,0 +1,2 @@
+seed,pipeline,fold,feature_arm,ranking_reversed_by_calibration,platt_slope,calibrated_auroc,warning_source,warning
+20260915,xfeat_h,3,non_stability,True,-2.8954369910054608e-05,0.173719603475382,reports/ROBUSTNESS_RESULTS_REVIEW.md,L-BFGS line-search warning retained

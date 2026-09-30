@@ -1,0 +1,9 @@
+pipeline_id,exact_rectangle_crossing,sampled_detj_sign_change,cached_folding_positive,cases,failures
+sift_h,False,False,False,139,137
+sift_h,False,False,True,7,7
+sift_h,True,False,False,3,3
+sift_h,True,True,True,372,372
+sp_lg_h,False,False,False,608,268
+sp_lg_h,True,True,True,10,10
+xfeat_h,False,False,False,623,340
+xfeat_h,True,True,True,2,2

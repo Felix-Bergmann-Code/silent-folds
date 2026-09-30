@@ -1,0 +1,33 @@
+{
+  "analysis_revision": "exact-corner-v1",
+  "config": "C:\\Users\\Felix\\Documents\\paper\\warpaudit\\configs\\full_study.yaml",
+  "config_hash": "38144f87fc3f7bb3",
+  "crossing_test": "exact sign bracketing at four closed image-rectangle corners",
+  "datasets": [
+    "HPatches",
+    "MegaDepth-1500",
+    "ScanNet-1500"
+  ],
+  "denominator_coordinate_frame": "working integer-centred pixels",
+  "failure_labels_used": false,
+  "ground_truth_used_by_matchers": false,
+  "homography_normalization": "frobenius_unit_norm",
+  "implementation_hash": "344f2503c25b1534edc5ffa086d342bb",
+  "input_manifests": [
+    "C:\\Users\\Felix\\Documents\\paper\\warpaudit\\benchmark_manifests\\hpatches.csv",
+    "C:\\Users\\Felix\\Documents\\paper\\warpaudit\\benchmark_manifests\\megadepth-1500.csv",
+    "C:\\Users\\Felix\\Documents\\paper\\warpaudit\\benchmark_manifests\\scannet-1500.csv"
+  ],
+  "magnitude_statistic": "minimum absolute denominator on a 32x32 lattice including corners",
+  "new_tasks_completed": 11320,
+  "pairs": 3580,
+  "pipelines": [
+    "xfeat_h",
+    "sp_lg_h",
+    "sift_h"
+  ],
+  "retinal_geometry_import": "C:\\Users\\Felix\\Documents\\paper\\warpaudit\\reports\\evidence_followup_exact_corner\\geometry.csv",
+  "retinal_imported_attempts": 1875,
+  "seed": 20260907,
+  "working_long_edge": 1024
+}

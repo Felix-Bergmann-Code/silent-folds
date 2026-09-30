@@ -1,0 +1,29 @@
+{
+  "revision": "2-development-review",
+  "feature_contract": "available_signals_descriptive",
+  "analysis_status": "prospective_descriptive",
+  "transfer_modes": ["dataset", "dataset_and_pipeline"],
+  "requested_coverages": [0.5, 0.7, 0.8, 0.9],
+  "arms": {
+    "match_count": ["B:match_count"],
+    "static": ["A:", "B:"],
+    "non_stability": ["A:", "B:", "C:", "D:", "F:", "G:"],
+    "non_stability_resampling": ["A:", "B:", "C:", "D:", "F:", "G:", "E1:resample_fixed_seed_"],
+    "non_stability_seed": ["A:", "B:", "C:", "D:", "F:", "G:", "E1:seed_only_"],
+    "non_stability_combined": ["A:", "B:", "C:", "D:", "F:", "G:", "E1:combined_"],
+    "non_stability_e1": ["A:", "B:", "C:", "D:", "F:", "G:", "E1:resample_fixed_seed_", "E1:seed_only_", "E1:combined_", "E1:factor_interaction_"],
+    "non_stability_e2": ["A:", "B:", "C:", "D:", "F:", "G:", "E2:"],
+    "non_stability_e1_e2": ["A:", "B:", "C:", "D:", "F:", "G:", "E1:resample_fixed_seed_", "E1:seed_only_", "E1:combined_", "E1:factor_interaction_", "E2:"]
+  },
+  "contrasts": [
+    ["static", "match_count"],
+    ["static", "non_stability"],
+    ["non_stability", "non_stability_resampling"],
+    ["non_stability", "non_stability_seed"],
+    ["non_stability", "non_stability_combined"],
+    ["non_stability", "non_stability_e1"],
+    ["non_stability", "non_stability_e2"],
+    ["non_stability_e1", "non_stability_e1_e2"],
+    ["non_stability_e2", "non_stability_e1_e2"]
+  ]
+}

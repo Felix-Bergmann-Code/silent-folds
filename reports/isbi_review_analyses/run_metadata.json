@@ -1,0 +1,11 @@
+{
+  "resamples": 2000,
+  "seed": 20260907,
+  "detector": "original assignment, Base arm, pole_guard, pooled raw score",
+  "thresholds": [
+    0.0025,
+    0.005,
+    0.01,
+    0.02
+  ]
+}

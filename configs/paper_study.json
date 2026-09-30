@@ -1,0 +1,19 @@
+{
+  "revision": "1-paper-evidence-development-informed",
+  "primary_pipelines": ["xfeat_h", "sp_lg_h"],
+  "arms": ["non_stability", "non_stability_e1", "non_stability_e2", "non_stability_e1_e2"],
+  "modes": ["within_pipeline", "held_out_pipeline"],
+  "outer_folds": 5,
+  "target_group_budgets": [5, 10, "all"],
+  "budget_repeats": 10,
+  "conditional_bootstrap_resamples": 2000,
+  "sensitivity": {
+    "name": "train_clipped_monotone_platt",
+    "training_margin_quantiles": [0.005, 0.995],
+    "slope_l2_penalty": 0.0001,
+    "interpretation": "Exploratory fixed sensitivity. Training-derived clipping and nonnegative slope; not a claimed novel method."
+  },
+  "external_calibration_fraction": 0.3,
+  "external_min_test_groups": 20,
+  "interpretation": "Development analyses remain exploratory. External descriptive estimates are conditional on an outcome-blind, cohort-specific lock; no automatic confirmatory power claim."
+}

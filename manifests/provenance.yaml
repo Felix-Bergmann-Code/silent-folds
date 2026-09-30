@@ -1,0 +1,101 @@
+generated_at: '2026-09-14T07:41:26+00:00'
+config_hash: 83032947e2c07302
+code_hash: tree:b0d3f88db4fbd1148b5ea20fef2d3dc70ef832226eaa07cd935a12618631d659
+datasets:
+- dataset_id: FIRE
+  version: official-2016-sha256-4f164d89
+  download_date: '2026-09-08'
+  citation: Hernandez-Matas et al., FIRE, IEEE JBHI (2017), doi:10.1109/JBHI.2017.2697318
+  archive_checksum: sha256:4f164d89a572d88a5f46bf7fe433813a21561163c83481d6e101573621f79700
+  source_url: https://projects.ics.forth.gr/cvrl/fire/FIRE.7z
+  source_archives:
+  - role: dataset_archive
+    url: https://projects.ics.forth.gr/cvrl/fire/FIRE.7z
+    path: data/_archives/FIRE.7z
+    size_bytes: 276589879
+    sha256: 4f164d89a572d88a5f46bf7fe433813a21561163c83481d6e101573621f79700
+  licence: No explicit dataset licence located on the official FIRE download page
+    [VERIFY redistribution]
+  redistribute_images: false
+  redistribute_derived: '[VERIFY against FIRE terms before public release]'
+  n_images: 124
+  n_image_ids: 268
+  n_pairs: 134
+  n_groups: 42
+  n_exact_duplicate_sets: 67
+  group_basis: image_component
+  grouping_claim: 'FIRE: patient identity is not resolved for 134 of 134 pairs. Grouping
+    falls back to shared-image connected components (42 groups). Splits are image-disjoint
+    but MUST NOT be described as patient-disjoint.'
+  unresolved_identities: 134
+  notes:
+  - Public direct download used for local research; redistribution remains unresolved.
+    The source page states 129 images, while exact hashing of the official archive
+    finds 124 contents across 268 pair-side files.
+  - 67 exact image-content duplicate set(s) were merged before group assignment
+  - 134 pair(s) have no recovered subject id and fall back to shared-image components;
+    this dataset is NOT patient-disjoint
+- dataset_id: COph100
+  version: figshare-v1-407ca917+ridirp-v1-c07f8234
+  download_date: '2026-09-08'
+  citation: Hu et al., COph100, Figshare v1, doi:10.6084/m9.figshare.27061084.v1
+  archive_checksum: sha256:407ca917280e4f5395b236ffd57096b7ddb2ff3ec362fe150c8ff47c6468e639
+  source_url: https://ndownloader.figshare.com/files/51235925
+  source_archives:
+  - role: annotations
+    url: https://ndownloader.figshare.com/files/51235925
+    path: data/_archives/COph100.zip
+    size_bytes: 128066919
+    sha256: 407ca917280e4f5395b236ffd57096b7ddb2ff3ec362fe150c8ff47c6468e639
+  - role: source_images
+    url: https://ndownloader.figshare.com/files/43152595
+    path: data/_archives/RIDIRP-images.zip
+    size_bytes: 2692475985
+    sha256: c07f82340210e8a99bffca99a270a5e6d2c00bb5f1b75e3bc7dac98ad4696163
+    supplied_md5: 6aed2fa62d7dec513d931b34520c678d
+    licence: CC0 (Figshare record 24565681 v1)
+  licence: CC BY 4.0 (Figshare v1 record)
+  redistribute_images: false
+  redistribute_derived: Metadata and annotations may be shared with COph100 CC BY
+    4.0 attribution; source pixels remain excluded by project policy
+  n_images: 324
+  n_image_ids: 324
+  n_pairs: 491
+  n_groups: 56
+  n_exact_duplicate_sets: 0
+  group_basis: patient
+  grouping_claim: 'COph100: grouped by recovered patient identity (56 groups over
+    491 pairs); splits are patient-disjoint.'
+  unresolved_identities: 0
+  notes:
+  - Official COph100 v1 annotations and the named source examinations from RIDIRP
+    v1 were checksum-audited. All 324 LabelMe imageData payloads differ from their
+    named examinations and are never used as source images. The 324 named examinations
+    in 100 eye folders yield 491 pairs and map to 56 patient prefixes through the
+    deposited copy helper's patient/stage convention.
+checkpoint_exposure:
+- component: SuperPoint
+  checkpoint: superpoint_v1.pth sha256:52b6708629640ca883673b5d5c097c4ddad37d8048b33f09c8ca0d69db12c40e
+  benchmark: HPatches
+  training_overlap: unknown
+  validation_or_tuning: unknown
+  reported_evaluation: reported
+  evidence: '[R28] §7.2 separates MS-COCO training from HPatches evaluation'
+- component: LightGlue
+  checkpoint: superpoint_lightglue_v0-1_arxiv.pth sha256:6ff7040d0a497fc6639337946d7538dae07428c18f77a067a0b5a960e7cc551a
+  benchmark: HPatches
+  training_overlap: unknown
+  validation_or_tuning: unknown
+  reported_evaluation: reported
+  evidence: '[R30] official tooling exposes HPatches evaluation'
+- component: XFeat
+  checkpoint: xfeat.pt sha256:0f5187fd7bedd26c7fe6acc9685444493a165a35ecc087b33c2db3627f3ea10b
+  benchmark: HPatches
+  training_overlap: unknown
+  validation_or_tuning: unknown
+  reported_evaluation: reported
+  evidence: '[R29] §4.2 reports HPatches homography estimation'
+warnings:
+- 'FIRE: 67 exact image-content duplicate set(s) were merged before group assignment'
+- 'FIRE: 134 pair(s) have no recovered subject id and fall back to shared-image components;
+  this dataset is NOT patient-disjoint'

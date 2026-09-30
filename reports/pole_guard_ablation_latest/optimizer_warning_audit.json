@@ -1,0 +1,59 @@
+{
+  "calibrator_iterations": [
+    11
+  ],
+  "diagnostics": {
+    "all_missing_training_features": [
+      "A:family_available",
+      "B:family_available",
+      "B:match_capacity_ratio",
+      "C:family_available",
+      "D:family_available",
+      "F:family_available",
+      "G:family_available"
+    ],
+    "calibrated_auroc": 0.173719603475382,
+    "calibrator_iterations": [
+      11
+    ],
+    "cases": 118,
+    "failure_groups": 14,
+    "failures": 41,
+    "groups": 19,
+    "missing_feature_fraction": 0.10606060606060606,
+    "model_hash": "9d9596fa8b449a4f",
+    "model_iterations": [
+      13
+    ],
+    "platt_intercept": 0.14291101095934727,
+    "platt_slope": -2.8954369910054608e-05,
+    "preprocessor_hash": "c3b0e82e08a8a8c4",
+    "probability_max": 0.5357031271911703,
+    "probability_min": 0.5356062276687521,
+    "probability_std": 1.958500472812685e-05,
+    "ranking_reversed_by_calibration": true,
+    "raw_auroc": 0.8262803965246183,
+    "raw_max": 8.448097571452417,
+    "raw_min": -5.006835528002878,
+    "selected_C": 10.0,
+    "success_groups": 15,
+    "successes": 77,
+    "valid_binary_labels": true
+  },
+  "feature_arm": "non_stability",
+  "fit_implementation": "current LogisticRegression max_iter=2000",
+  "fold": 3,
+  "model_iterations": [
+    13
+  ],
+  "pipeline": "xfeat_h",
+  "seed": 20260915,
+  "selected_C": 10.0,
+  "warning_free": false,
+  "warnings": [
+    {
+      "category": "ConvergenceWarning",
+      "message": "lbfgs failed to converge (status=2):\nABNORMAL_TERMINATION_IN_LNSRCH.\n\nIncrease the number of iterations (max_iter) or scale the data as shown in:\n    https://scikit-learn.org/stable/modules/preprocessing.html\nPlease also refer to the documentation for alternative solver options:\n    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression"
+    }
+  ]
+}
