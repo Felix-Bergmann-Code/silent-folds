@@ -6,6 +6,7 @@ authors:
     given-names: Felix
     affiliation: University of Amsterdam
 license: MIT
+doi: "10.5281/zenodo.23068903"
 repository-code: "https://github.com/Felix-Bergmann-Code/silent-folds"
 preferred-citation:
   type: conference-paper

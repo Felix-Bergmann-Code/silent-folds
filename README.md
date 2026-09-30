@@ -1,5 +1,7 @@
 # Silent Folds
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23068903.svg)](https://doi.org/10.5281/zenodo.23068903)
+
 Code and results for
 
 > F. Bergmann, "Silent Folds: Projective Poles as a Training-Free Failure Flag
