@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "warpaudit"
+version = "1.0.1"
+description = "Projective-pole tests, pole clearance, and registration QC for homography-based retinal registration"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Felix Bergmann" }]
+
+# Lightweight CPU evaluation environment (spec 12.1). Upstream registration
+# pipelines live in isolated environments and communicate through the versioned
+# cache schema; they are NOT dependencies of this package.
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "pandas>=2.0",
+    "pyarrow>=11",
+    "pyyaml>=6.0",
+    "scikit-learn>=1.3",
+    "threadpoolctl>=3.1",
+    "scikit-image>=0.21",
+    "Pillow>=10.0",
+]
+
+[project.optional-dependencies]
+# Isolated per-pipeline extras. Install into the pipeline environment, not the
+# evaluation environment. Versions are pinned only after local reproduction
+# (spec 12.1: "Lock only versions that actually run").
+match = ["torch", "opencv-python-headless", "kornia"]
+gbm = ["lightgbm>=4.0"]
+# Reporting only. Deliberately not a core dependency and not pinned in
+# requirements-eval.lock: the lock is part of the registration and feature cache
+# identities, so a plotting library there would invalidate every cached
+# scientific value it cannot possibly change.
+report = ["matplotlib>=3.7"]
+dev = ["pytest>=7.4", "pytest-cov>=4.1", "ruff>=0.6"]
+
+[project.scripts]
+warpaudit = "warpaudit.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["warpaudit*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--strict-markers --strict-config"
+filterwarnings = ["error::RuntimeWarning"]
+markers = [
+    # The end-to-end study run: minutes rather than seconds, so it can be
+    # deselected during rapid iteration with `-m "not slow"`.
+    "slow: exercises the whole study pipeline end to end",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["E501"]

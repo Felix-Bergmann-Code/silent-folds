@@ -1,0 +1,170 @@
+project: warpaudit-factorized-stability
+spec_revision: "3.1-descriptive-draft"
+tier: full
+
+paths:
+  data_root: data
+  cache_root: full_study_outputs/cache
+  manifests: full_study_outputs/manifests
+  reports: full_study_outputs/reports
+  figures: full_study_outputs/paper/figures
+  tables: full_study_outputs/paper/tables
+
+datasets:
+  - id: FIRE
+    version: official-2016
+    root: data/FIRE
+    role: development
+    group_basis: image_component
+    patient_ids_available: false
+    citation: Hernandez-Matas et al. (2017)
+    licence: redistribution unresolved
+    access_note: previously inspected; development only
+  - id: COph100
+    version: figshare-v1
+    root: data/COph100
+    role: development
+    group_basis: patient
+    patient_ids_available: true
+    citation: Hu et al. (2025)
+    licence: CC BY 4.0
+    access_note: previously inspected; development only
+  - id: MultiRegHistology
+    version: zenodo-5557568-v1.2.0
+    root: data/MultiRegHistology
+    role: external_descriptive
+    group_basis: specimen
+    patient_ids_available: false
+    citation: Lu et al. (2022), doi:10.1371/journal.pone.0276196
+    licence: CC BY 4.0
+    access_note: public controlled SHG-BF benchmark; pooled cohort grouping; no patient inference
+  - id: MultiRegCytology
+    version: zenodo-5557568-v1.2.0
+    root: data/MultiRegCytology
+    role: external_descriptive
+    group_basis: specimen
+    patient_ids_available: false
+    citation: Lu et al. (2022), doi:10.1371/journal.pone.0276196
+    licence: CC BY 4.0
+    access_note: public controlled fluorescence-QPI benchmark; conservative cell-line grouping
+
+pipelines:
+  - id: xfeat_h
+    version: official-e92685f-protocol1.0-torch2.3.1
+    matcher: xfeat
+    checkpoint: "xfeat.pt sha256:0f5187fd7bedd26c7fe6acc9685444493a165a35ecc087b33c2db3627f3ea10b"
+    fit: warpaudit_ransac_dlt
+    adapter: subprocess
+    command: [.pipeline-envs/xfeat/Scripts/python.exe, scripts/matchers/xfeat_worker.py]
+    options:
+      environment_lock: requirements-xfeat.lock
+      upstream_root: vendor/accelerated_features
+      weights_path: checkpoints/xfeat/xfeat.pt
+      device: auto
+      top_k: 4096
+      detection_threshold: 0.05
+      min_cossim: 0.82
+    provenance:
+      numpy_version: "1.26.4"
+      python_version: "3.11.11"
+      torch_version: "2.3.1+cu121"
+      upstream_commit: e92685f57f8318b18725c5c8c0bd28c7fe188d9a
+      xfeat_weights_sha256: 0f5187fd7bedd26c7fe6acc9685444493a165a35ecc087b33c2db3627f3ea10b
+  - id: sp_lg_h
+    version: official-eb42fee-protocol1.0-torch2.3.1
+    matcher: superpoint+lightglue
+    checkpoint: "pinned SuperPoint and LightGlue sha256; see pilot config"
+    fit: warpaudit_ransac_dlt
+    adapter: subprocess
+    command: [.pipeline-envs/sp_lightglue/Scripts/python.exe, scripts/matchers/sp_lightglue_worker.py]
+    options:
+      environment_lock: requirements-sp-lightglue.lock
+      upstream_root: vendor/LightGlue
+      torch_home: checkpoints/lightglue
+      device: auto
+      max_num_keypoints: 2048
+      detection_threshold: 0.0005
+      nms_radius: 4
+      flash: true
+      mixed_precision: false
+      depth_confidence: 0.95
+      width_confidence: 0.99
+      filter_threshold: 0.1
+    provenance:
+      kornia_version: "0.7.3"
+      lightglue_weights_sha256: 6ff7040d0a497fc6639337946d7538dae07428c18f77a067a0b5a960e7cc551a
+      numpy_version: "1.26.4"
+      opencv_version: "4.10.0"
+      python_version: "3.11.11"
+      superpoint_weights_sha256: 52b6708629640ca883673b5d5c097c4ddad37d8048b33f09c8ca0d69db12c40e
+      torch_version: "2.3.1+cu121"
+      upstream_commit: eb42fee2d71449efb0aa5c10549752b5d75384d8
+  - id: sift_h
+    version: opencv-sift-protocol1.0-v1
+    matcher: opencv-sift
+    checkpoint: none-classical
+    fit: warpaudit_ransac_dlt
+    adapter: subprocess
+    command: [.pipeline-envs/sp_lightglue/Scripts/python.exe, scripts/matchers/sift_worker.py]
+    options:
+      environment_lock: requirements-sp-lightglue.lock
+      nfeatures: 4096
+      ratio: 0.8
+    provenance:
+      numpy_version: "1.26.4"
+      opencv_version: "4.10.0"
+      python_version: "3.11.11"
+  - id: xfeat_tps
+    version: official-e92685f-tps-protocol1.0-v1
+    matcher: xfeat
+    checkpoint: "xfeat.pt sha256:0f5187fd7bedd26c7fe6acc9685444493a165a35ecc087b33c2db3627f3ea10b"
+    transform_family: tps
+    fit: warpaudit_ransac_consensus_tps
+    ransac_threshold_px: 8.0
+    min_matches: 6
+    adapter: subprocess
+    command: [.pipeline-envs/xfeat/Scripts/python.exe, scripts/matchers/xfeat_worker.py]
+    options:
+      environment_lock: requirements-xfeat.lock
+      upstream_root: vendor/accelerated_features
+      weights_path: checkpoints/xfeat/xfeat.pt
+      device: auto
+      top_k: 4096
+      detection_threshold: 0.05
+      min_cossim: 0.82
+      tps_regularisation: 0.001
+    provenance:
+      numpy_version: "1.26.4"
+      python_version: "3.11.11"
+      torch_version: "2.3.1+cu121"
+      upstream_commit: e92685f57f8318b18725c5c8c0bd28c7fe188d9a
+      xfeat_weights_sha256: 0f5187fd7bedd26c7fe6acc9685444493a165a35ecc087b33c2db3627f3ea10b
+
+geometry: {working_long_edge: 1024, grid_size: 32}
+features:
+  families: [A, B, C, D, E1, E2, F, G]
+  bootstrap_B: 64
+  perturbation_B: 16
+  perturbation_B_sensitivity: [4, 8, 16]
+splits: {development_fraction: 0.20, seed: 20260907, n_outer_folds: 5, min_outer_folds: 2}
+policy:
+  nominal_acceptance: 0.70
+  requested_coverages: [0.5, 0.7, 0.8, 0.9]
+  calibration_method: platt
+learners: {primary: logistic, secondary: lightgbm, logistic_C: [0.1, 1.0, 10.0]}
+inference: {conditional_bootstrap: 10000, refit_bootstrap: 1000}
+
+full_study:
+  analysis_mode: descriptive
+  development_datasets: [FIRE, COph100]
+  external_confirmatory_datasets: []
+  external_descriptive_datasets: [MultiRegHistology, MultiRegCytology]
+  baseline_families: [A, B]
+  augmented_families: [A, B, C, D, E1, E2, F, G]
+  primary_metric: brier_improvement
+  min_brier_improvement: 0.01
+  min_passing_cell_fraction: 0.50
+  min_class_bearing_groups: 10
+  min_information_probability: 0.80
+  bootstrap_resamples: 5000
+  high_confidence_cutoff: 0.20

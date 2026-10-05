@@ -1,0 +1,268 @@
+# WarpAudit pilot configuration (sprint one, T0-T8).
+#
+# Every value here is a PROSPECTIVE default from specification revision 2.2.
+# Changing a value that could affect a confirmatory result requires an entry in
+# PROTOCOL_DEVIATIONS.md. This file is one of the artefacts frozen at G1
+# alongside splits.json, pipeline_manifest.yaml, feature_manifest.yaml and
+# experiment_manifest.yaml.
+
+project: warpaudit
+spec_revision: "2.2"
+tier: pilot
+
+# Selected at M2 by information feasibility, never assumed (spec 3.3).
+# `null` until `plan-study` reports and a human records the decision.
+primary_direction: null
+direction_priority:
+  - "COph100->FIRE"
+  - "FIRE->COph100"
+
+paths:
+  data_root: data
+  cache_root: cache
+  manifests: manifests
+  reports: reports
+  figures: paper/figures
+  tables: paper/tables
+
+datasets:
+  - id: FIRE
+    version: "official-2016-sha256-4f164d89"
+    root: data/FIRE
+    role: pilot
+    # 134 pairs from 129 images and 39 patients; 10 landmarks per pair [R10].
+    # Patient IDs are NOT assumed recoverable. `audit-data` sets this flag from
+    # evidence; until then grouping falls back to shared-image components and
+    # the result is not called patient-disjoint (spec 4.1).
+    patient_ids_available: false
+    group_basis: image_component
+    annotation_kind: landmarks
+    source_url: https://projects.ics.forth.gr/cvrl/fire/FIRE.7z
+    archive_path: data/_archives/FIRE.7z
+    archive_sha256: 4f164d89a572d88a5f46bf7fe433813a21561163c83481d6e101573621f79700
+    archive_size_bytes: 276589879
+    download_date: "2026-09-08"
+    citation: "Hernandez-Matas et al., FIRE, IEEE JBHI (2017), doi:10.1109/JBHI.2017.2697318"
+    licence: "No explicit dataset licence located on the official FIRE download page [VERIFY redistribution]"
+    access_note: >-
+      Public direct download used for local research; redistribution remains
+      unresolved. The source page states 129 images, while exact hashing of the
+      official archive finds 124 contents across 268 pair-side files.
+    redistribute_images: false
+    redistribute_derived: "[VERIFY against FIRE terms before public release]"
+    # The source page states 129 images. Exact hashing of the official archive
+    # finds 124 distinct byte contents across 268 pair-side files; the five-
+    # image discrepancy is retained in provenance rather than normalized away.
+    expected_images: 124
+    expected_pairs: 134
+
+  - id: COph100
+    version: "figshare-v1-407ca917+ridirp-v1-c07f8234"
+    root: data/COph100
+    role: pilot
+    # 491 pairs from 100 eyes with repeated examinations [R11]. 100 eyes are
+    # not automatically 100 independent patients; group by patient when
+    # identifiable, otherwise by eye, retaining bilateral-dependence
+    # uncertainty (spec 4.1).
+    patient_ids_available: true
+    group_basis: patient
+    annotation_kind: landmarks
+    source_url: https://ndownloader.figshare.com/files/51235925
+    archive_path: data/_archives/COph100.zip
+    archive_sha256: 407ca917280e4f5395b236ffd57096b7ddb2ff3ec362fe150c8ff47c6468e639
+    archive_size_bytes: 128066919
+    parent_source_url: https://ndownloader.figshare.com/files/43152595
+    parent_archive_path: data/_archives/RIDIRP-images.zip
+    parent_archive_sha256: c07f82340210e8a99bffca99a270a5e6d2c00bb5f1b75e3bc7dac98ad4696163
+    parent_archive_md5: 6aed2fa62d7dec513d931b34520c678d
+    parent_archive_size_bytes: 2692475985
+    parent_licence: "CC0 (Figshare record 24565681 v1)"
+    download_date: "2026-09-08"
+    citation: "Hu et al., COph100, Figshare v1, doi:10.6084/m9.figshare.27061084.v1"
+    licence: "CC BY 4.0 (Figshare v1 record)"
+    access_note: >-
+      Official COph100 v1 annotations and the named source examinations from
+      RIDIRP v1 were checksum-audited. All 324 LabelMe imageData payloads differ
+      from their named examinations and are never used as source images. The
+      324 named examinations in 100 eye folders yield 491 pairs and map to 56
+      patient prefixes through the deposited copy helper's patient/stage convention.
+    redistribute_images: false
+    redistribute_derived: "Metadata and annotations may be shared with COph100 CC BY 4.0 attribution; source pixels remain excluded by project policy"
+    expected_images: 324
+    expected_pairs: 491
+
+pipelines:
+  - id: xfeat_h
+    version: "official-e92685f-protocol1.0-torch2.3.1"
+    matcher: xfeat
+    checkpoint: "xfeat.pt sha256:0f5187fd7bedd26c7fe6acc9685444493a165a35ecc087b33c2db3627f3ea10b"
+    transform_family: homography
+    # Addressable seeded RANSAC + normalised DLT. Do not label this MAGSAC:
+    # the pilot E1 controls require correspondence and seed variation to be
+    # independently reproducible, which the local fitter explicitly supports.
+    fit: warpaudit_ransac_dlt
+    ransac_threshold_px: 3.0
+    max_iters: 10000
+    confidence: 0.9999
+    min_matches: 4
+    in_common_block: true
+    environment: xfeat
+    adapter: subprocess
+    command: [.pipeline-envs/xfeat/bin/python, scripts/matchers/xfeat_worker.py]
+    timeout_s: 600
+    options:
+      environment_lock: requirements-xfeat.lock
+      upstream_root: vendor/accelerated_features
+      weights_path: checkpoints/xfeat/xfeat.pt
+      device: auto
+      top_k: 4096
+      detection_threshold: 0.05
+      min_cossim: 0.82
+    provenance:
+      numpy_version: "1.26.4"
+      python_version: "3.11.11"
+      torch_version: "2.3.1+cu121"
+      upstream_commit: "e92685f57f8318b18725c5c8c0bd28c7fe188d9a"
+      xfeat_weights_sha256: "0f5187fd7bedd26c7fe6acc9685444493a165a35ecc087b33c2db3627f3ea10b"
+    notes: >-
+      First pipeline (T4). Robust homography fitting policy is shared with
+      sp_lg_h so that only correspondence extraction changes. Homographies are
+      a controlled global-transform block, not an appropriate model for
+      arbitrary deformation. The adapter decodes to RGB8, applies the declared
+      WarpAudit working-frame resampler, and retains XFeat's internal
+      divisible-by-32 resize with its returned coordinates mapped back to the
+      declared working frame.
+
+  - id: sp_lg_h
+    version: "official-eb42fee-protocol1.0-torch2.3.1"
+    matcher: superpoint+lightglue
+    checkpoint: >-
+      superpoint_v1.pth sha256:52b6708629640ca883673b5d5c097c4ddad37d8048b33f09c8ca0d69db12c40e;
+      superpoint_lightglue_v0-1_arxiv.pth sha256:6ff7040d0a497fc6639337946d7538dae07428c18f77a067a0b5a960e7cc551a
+    transform_family: homography
+    fit: warpaudit_ransac_dlt
+    ransac_threshold_px: 3.0
+    max_iters: 10000
+    confidence: 0.9999
+    min_matches: 4
+    in_common_block: true
+    environment: sp_lightglue
+    adapter: subprocess
+    command: [.pipeline-envs/sp_lightglue/bin/python, scripts/matchers/sp_lightglue_worker.py]
+    timeout_s: 600
+    options:
+      environment_lock: requirements-sp-lightglue.lock
+      upstream_root: vendor/LightGlue
+      torch_home: checkpoints/lightglue
+      device: auto
+      max_num_keypoints: 2048
+      detection_threshold: 0.0005
+      nms_radius: 4
+      flash: true
+      mixed_precision: false
+      depth_confidence: 0.95
+      width_confidence: 0.99
+      filter_threshold: 0.1
+    provenance:
+      kornia_version: "0.7.3"
+      lightglue_weights_sha256: "6ff7040d0a497fc6639337946d7538dae07428c18f77a067a0b5a960e7cc551a"
+      numpy_version: "1.26.4"
+      opencv_version: "4.10.0"
+      python_version: "3.11.11"
+      superpoint_weights_sha256: "52b6708629640ca883673b5d5c097c4ddad37d8048b33f09c8ca0d69db12c40e"
+      torch_version: "2.3.1+cu121"
+      upstream_commit: "eb42fee2d71449efb0aa5c10549752b5d75384d8"
+    notes: >-
+      Second common pipeline (T5). Same documented fitting policy; distinct
+      pipeline id. HPatches benchmark familiarity of these checkpoints is
+      recorded in the exposure register, not treated as proven training leakage.
+      The adapter decodes to RGB8, applies the same WarpAudit working-frame
+      resampler, and disables LightGlue's additional online resize.
+
+geometry:
+  working_long_edge: 1024
+  pad_to_square: false
+  pixel_center_convention: integer-centre
+  interpolation: bilinear
+  padding_mode: zeros
+  grid_size: 32
+
+labels:
+  tau_primary: 0.005          # ~20.6 px at FIRE's original 2912x2912
+  tau_secondary: [0.0025, 0.01]
+  bounded_loss_cap: 10.0
+  bounded_loss_sensitivity_caps: [5.0, 20.0]
+  hpatches_min_valid_points: 20
+  r8_landmark_success_px: 12.5
+
+features:
+  # Extracted families. The common-block *composite* is not this list: it is
+  # whatever the development E1/cycle gate freezes (spec 7.1a, 7.2a), which the
+  # G1 record then fixes. A, B, E1 are the pilot core; D and G are the cheap
+  # focused-study additions; C and F are the cost-controlled extensions.
+  families: [A, B, C, D, E1, F, G]
+  bootstrap_B: 32
+  perturbation_B: 8
+  perturbation_B_sensitivity: [4, 16]
+  # Development-frozen E1 gate (spec 7.2a). These numbers are placeholders
+  # until T6 measures repeatability on synthetic fixtures and same-input
+  # repeat fits; `features` refuses to score confirmatory data while they are
+  # unconfirmed.
+  e1_repeatability_tolerance: 1.0e-4
+  e1_seed_dominance_max_ratio: 0.5
+  e1_min_error_spearman: 0.15
+  cycle_tolerance: 1.0e-4
+  fallback_families_if_e1_degenerate: [A, B]
+
+splits:
+  development_fraction: 0.20
+  seed: 20260907
+  n_outer_folds: 5
+  min_outer_folds: 2
+  low_information_group_threshold: 10
+  conformal_min_calibration_groups: 19
+
+policy:
+  nominal_acceptance: 0.70
+  tie_rule: conservative_reject
+  requested_coverages: [0.5, 0.7, 0.8, 0.9]
+  calibration_method: platt
+  reliability_bins: 5
+  safety_accepted_failure_rate: 0.05
+
+learners:
+  primary: logistic
+  secondary: lightgbm
+  logistic_C: [0.1, 1.0, 10.0]
+  lightgbm_leaves: [7, 15]
+  lightgbm_min_child_samples: [20, 50]
+  forest_n_estimators: 200
+  forest_max_depth: 6
+  sample_weighting: inverse_group_size
+
+inference:
+  auroc_floor: 0.70                 # H4 component 1
+  gap_noninferiority_margin: 0.05   # H4 component 2
+  delta_policy_margin: 0.05         # H4 component 3
+  alpha_one_sided: 0.05
+  conditional_bootstrap: 10000
+  refit_bootstrap: 1000
+  max_invalid_resample_fraction: 0.05
+  multiplicity_rule: intersection_union
+
+# Report-only feasibility screening for the M2 direction decision (§10.3).
+# Deliberately excluded from config_hash: nothing here enters a cached
+# registration, label, or feature value, so tuning it never invalidates
+# compute. A parameter that would change a cached result does not belong here.
+planning:
+  min_class_bearing_groups: 5       # per class, per outer-fold target test
+  min_accepted_groups: 5            # accepted groups available to the policy contrast
+  feasibility_probability: 0.90     # screening rule, not a power guarantee
+  paired_correlation: 0.5           # assumed, for paired gap and policy contrasts
+  accepted_failure_risk: 0.15       # centre of the accepted-group risk contrast
+  n_simulations: 20000
+  seed: 20260907
+  scenarios:                        # [target_auroc, gap_auc, delta_policy]
+    optimistic: [0.85, 0.02, 0.10]
+    central: [0.78, 0.03, 0.07]
+    pessimistic: [0.72, 0.05, 0.04]

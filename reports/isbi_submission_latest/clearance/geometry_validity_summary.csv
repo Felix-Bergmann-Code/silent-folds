@@ -1,0 +1,4 @@
+pipeline_id,returned,forward_crossings,inverse_crossings_fixed_image,either_direction,either_direction_failed,inverse_only,inverse_only_failed,global_reflections_noncrossing,global_reflections_failed,crossings_passing_projected_quad_heuristic,noncrossings_failing_projected_quad_heuristic,corner_test_consistent_with_add_pole_guard
+sift_h,521,375,373,383,383,8,8,7,7,0,7,True
+sp_lg_h,618,10,11,14,14,4,4,0,0,0,0,True
+xfeat_h,625,2,0,2,2,0,0,0,0,0,0,True

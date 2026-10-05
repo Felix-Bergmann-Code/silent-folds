@@ -1,0 +1,7 @@
+dataset_id,variant,cases,returned,failures,rectangle_poles,refit_fallbacks
+COph100,fov,491,368,384,19,0
+COph100,none,491,336,388,16,0
+COph100,rectangle,491,435,359,0,1
+FIRE,fov,134,134,19,0,0
+FIRE,none,134,134,19,0,0
+FIRE,rectangle,134,134,19,0,0

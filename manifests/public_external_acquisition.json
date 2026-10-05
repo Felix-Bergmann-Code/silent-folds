@@ -1,0 +1,20 @@
+[
+  {
+    "dataset": "MultiRegHistology",
+    "pairs": 536,
+    "groups": 1,
+    "archive_sha256": "cec52a3d320eae9b3c1a8c0ac26412d4dd995313230c8303ed4958500ef619b4",
+    "archive_md5": "7197ef44d3924d25e30d527437545eaf",
+    "index_sha256": "9f0bb1656ad8d8bb774b8c45926f372d7e6ee1453b412db136e31ebff4775b1c",
+    "source": "https://zenodo.org/records/5557568/files/Histological.zip"
+  },
+  {
+    "dataset": "MultiRegCytology",
+    "pairs": 5040,
+    "groups": 3,
+    "archive_sha256": "67c137ff02ca45c0b441bafc78456ca8cd58dce3f2ef4e74c6bba6214ea0c59b",
+    "archive_md5": "7cc39ada56fa698a9120b7bfab59ec04",
+    "index_sha256": "375dd48b4ffc38299aa7186bf7e5cde47da54ace269ef78d83ed12d1e9e61bf1",
+    "source": "https://zenodo.org/records/5557568/files/Cytological.zip"
+  }
+]

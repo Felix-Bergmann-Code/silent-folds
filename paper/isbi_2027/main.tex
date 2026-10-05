@@ -1,0 +1,493 @@
+% IEEE ISBI 2027 four-page paper (official spconf template). The whole paper,
+% including references, fits in four pages: no paid fifth page.
+\documentclass{article}
+\usepackage{spconf,amsmath,amssymb,graphicx,booktabs,array,url,microtype,balance}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+
+% Values still to be filled from reports/isbi_submission_latest (workstation).
+% Every \pend must be gone before submission; the build log lists survivors.
+\newcommand{\pend}[1]{\textcolor{red}{#1}\typeout{PENDING VALUE: #1}}
+% Wording that depends on which way a pending result falls; both branches are
+% drafted in SUBMISSION_CHECKLIST.md. Remove the wrapper once confirmed.
+\newcommand{\decide}[1]{\textcolor{red}{#1}\typeout{DECIDE BRANCH: #1}}
+% Workstation numbers: scripts/build_isbi_numbers.py writes numbers.tex.
+\InputIfFileExists{numbers.tex}{}{}
+\providecommand{\numXfInlAUROC}{\pend{.00}}
+\providecommand{\numSpInlAUROC}{\pend{.00}}
+\providecommand{\numXfPerspAUROC}{\pend{.00}}
+\providecommand{\numSpPerspAUROC}{\pend{.00}}
+\providecommand{\numXfComboAUROC}{\pend{.00}}
+\providecommand{\numSpComboAUROC}{\pend{.00}}
+\providecommand{\numSrComboAUROC}{\pend{.00}}
+\providecommand{\numInlAUROCRange}{\pend{0.XX}}
+\providecommand{\numNestedPrecision}{\pend{XX\%}}
+\providecommand{\numNestedTau}{\pend{X.X}}
+\providecommand{\numNestedRecall}{\pend{XX\%}}
+\providecommand{\numCondDelta}{\pend{+0.00X}}
+\providecommand{\numLogRevXf}{\pend{0/0}}
+\providecommand{\numLogRevSp}{\pend{0/0}}
+\providecommand{\numLogAucB}{\pend{.000}}
+\providecommand{\numLogAucS}{\pend{.000}}
+\providecommand{\numLogRevTotal}{\pend{N}}
+\providecommand{\numQuantRevXf}{\pend{0/0}}
+\providecommand{\numQuantRevSp}{\pend{0/0}}
+\providecommand{\numQuantAucB}{\pend{.000}}
+\providecommand{\numQuantAucS}{\pend{.000}}
+\providecommand{\numQuantRevTotal}{\pend{N}}
+\providecommand{\numSampledMisses}{\pend{N}}
+\providecommand{\numSampledMissesSift}{\pend{0/0}}
+\providecommand{\numInverseOnly}{\pend{N}}
+\providecommand{\numInverseOnlyFailed}{\pend{N}}
+\providecommand{\numReflections}{\pend{N}}
+\providecommand{\numQuadPasses}{\pend{N}}
+\providecommand{\numRansacXf}{\pend{0/0/0}}
+\providecommand{\numRansacSp}{\pend{0/0/0}}
+\providecommand{\numRansacSift}{\pend{0/0/0}}
+\providecommand{\numRansacSr}{\pend{0/0/0}}
+\providecommand{\numMoisanLeft}{\pend{Z}}
+\providecommand{\numPoleRescued}{\pend{X}}
+\providecommand{\numPoleExplicit}{\pend{Y}}
+\providecommand{\numPoleSilent}{\pend{Y}}
+\providecommand{\numSiftToSilent}{\pend{N}}
+\providecommand{\numChangedNonPole}{\pend{N}}
+\providecommand{\numNetSuccess}{\pend{$\pm$0}}
+\providecommand{\numSrReturned}{\pend{000}}
+\providecommand{\numSrFailed}{\pend{000}}
+\providecommand{\numSrRect}{\pend{0/0}}
+\providecommand{\numSrFov}{\pend{0/0}}
+\providecommand{\numSrRho}{\pend{0/0}}
+\providecommand{\numSrRectCount}{\pend{N}}
+\providecommand{\numSrZeroInlier}{\pend{N}}
+\providecommand{\numSrPoleGroups}{\pend{N}}
+\providecommand{\numSrRefitPoles}{\pend{N}}
+\providecommand{\numSrClrAUROC}{\pend{.000}}
+\providecommand{\numSrInlAUROC}{\pend{.00}}
+\providecommand{\numSrPerspAUROC}{\pend{.00}}
+\providecommand{\numSrFireDiff}{\pend{0.0XX}}
+\providecommand{\numXfClrCI}{\pend{?}}
+\providecommand{\numSpClrCI}{\pend{?}}
+\providecommand{\numSrClrCI}{\pend{?}}
+\providecommand{\numXfInlCI}{\pend{?}}
+\providecommand{\numSpInlCI}{\pend{?}}
+\providecommand{\numSrInlCI}{\pend{?}}
+\providecommand{\numXfFusedCI}{\pend{?}}
+\providecommand{\numSpFusedCI}{\pend{?}}
+\providecommand{\numSrFusedCI}{\pend{?}}
+\providecommand{\numSpFusedInlDiff}{\pend{?}}
+\providecommand{\numSrFusedInlDiff}{\pend{?}}
+\providecommand{\numXfFusedInlDiff}{\pend{?}}
+\providecommand{\numXfFusedDetDiff}{\pend{?}}
+\providecommand{\numSpFusedDetDiff}{\pend{?}}
+\providecommand{\numSrWithInl}{\pend{?}}
+\providecommand{\numSrWithInlClr}{\pend{?}}
+\providecommand{\numSrWithInlInl}{\pend{?}}
+\providecommand{\numClrPerspBound}{\pend{?}}
+\providecommand{\numSensSp}{\pend{?}}
+\providecommand{\numSensSr}{\pend{?}}
+\providecommand{\numSensXf}{\pend{?}}
+\providecommand{\numCrossFailLoose}{\pend{?}}
+\providecommand{\numReturnedShift}{\pend{?}}
+\providecommand{\numSensMinFused}{\pend{?}}
+\providecommand{\numSensMinClr}{\pend{?}}
+\providecommand{\numSensMinInl}{\pend{?}}
+\providecommand{\numClrAffineBound}{\pend{?}}
+\providecommand{\numCondAUROCRange}{\pend{?}}
+\providecommand{\numFarClr}{\pend{?}}
+\providecommand{\numFarInl}{\pend{?}}
+\providecommand{\numFusedDetMargin}{\pend{?}}
+\providecommand{\numGenericCross}{\pend{?}}
+\providecommand{\numGenericCrossGroups}{\pend{?}}
+\providecommand{\numGenericCrossTop}{\pend{?}}
+\providecommand{\numSrCrossMax}{\pend{?}}
+\providecommand{\numCophGenericRate}{\pend{?}}
+\providecommand{\numCophSrRate}{\pend{?}}
+
+\title{SILENT FOLDS: PROJECTIVE POLES AS A TRAINING-FREE FAILURE FLAG\\
+IN HOMOGRAPHY-BASED RETINAL REGISTRATION}
+\name{Felix Bergmann}
+\address{University of Amsterdam, Amsterdam, The Netherlands\\
+\texttt{felix.bergmann2@student.uva.nl}}
+
+\newcommand{\xf}{XFeat-H}
+\newcommand{\splg}{SPLG-H}
+\newcommand{\sift}{SIFT-H}
+\newcommand{\sr}{SuperRetina}
+\newcommand{\ci}[1]{\,{\scriptsize(#1)}}
+
+\begin{document}
+\ninept
+\maketitle
+
+\begin{abstract}
+Homographies remain the default transform in feature-based retinal
+registration, yet every homography has a pole line on which its denominator
+vanishes; where that line crosses the fundus the warp folds, while the matrix
+still looks valid. Auditing 625 FIRE and COph100 pairs registered with XFeat,
+SuperPoint/LightGlue, and the released retina-specific SuperRetina, we find
+that all 100 observed image crossings are registration failures, 25 of them
+not flagged by the estimator. The pole clearance $\rho$, a unit-free distance
+from four denominator evaluations, is a training-free quality-control (QC)
+score: 167 of the 168 estimates within one image diagonal of a pole fail.
+Fused with RANSAC inlier ratio, it reaches an area under the ROC curve of
+0.85--0.86, at most \numFusedDetMargin{} below a learned detector (95\% bound),
+and stays at or above 0.75 across failure endpoints where either score alone
+drops to 0.47--0.56. Poles can also destabilize learned QC: unbounded
+curvature features reversed Platt calibration in 20 detector folds, all
+holding one patient's poles; guarding, log-transforming, or dropping the
+feature prevents this, and only a guard keeps the pole as an explicit flag.
+\end{abstract}
+
+\begin{keywords}
+retinal image registration, quality control, homography, failure detection, calibration
+\end{keywords}
+
+\section{Introduction}
+\label{sec:intro}
+
+Registration of fundus photographs underlies longitudinal monitoring and
+screening, for example of retinopathy of prematurity in infants
+\cite{coph,ridirp}. A silently failed registration corrupts every downstream
+change measurement, so at scale failures must be caught automatically.
+Feature-based retinal methods still estimate a homography: SuperRetina fits
+one to learned keypoints \cite{superretina}, and SuperJunction uses one as its
+first stage \cite{superjunction}. Registration quality control (QC), in turn, predicts failure
+from appearance, match, and transformation features such as Jacobians and
+bending energy \cite{bierbrier,sokooti,octfundusreg}.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{assets/qualitative_pole.pdf}
+\vspace{-6mm}
+\caption{Two failed COph100 \xf{} registrations (patient 055). (a,c) Moving
+fundus images; (b,d) log bending-energy density of the estimated warp on one
+shared scale. Cyan: pole line $d=0$; dotted: inscribed-FOV proxy. In case 1
+the pole clips the rectangle but misses the FOV and the fundus mask; in case 2
+it crosses the FOV along a 294.9-pixel chord. Images: RIDIRP (CC0);
+annotations: COph100 (CC BY 4.0) \cite{ridirp,coph}.}
+\label{fig:poles}
+\end{figure*}
+
+\begin{table*}[t]
+\centering\small
+\caption{Pole audit on 625 retinal pairs. Failed / flagged: returned transforms
+that fail / that the criterion flags (2/2: both flagged estimates failed).
+AUROCs are pooled and group-weighted over all attempted pairs, with 95\%
+group-bootstrap intervals; inlier ratio is a pre-specified training-free
+baseline (for \sr{}, its LMedS inlier rate); fused: Sec.~\ref{sec:method};
+detector: median raw AUROC of the guarded Base detector over 21 assignments,
+trained for the generic pipelines only. Constrained RANSAC (rectangle):
+failures made successes / silent failures made explicit / explicit failures
+made silent; for \sr{}, the study RANSAC re-fits its stage-1 matches. \sift{}
+is a weak-matching stress test.}
+\label{tab:audit}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lrrrrrllllr}
+\toprule
+ & & & \multicolumn{3}{c}{Failed / flagged} & \multicolumn{4}{c}{AUROC} & Constr. \\
+\cmidrule(lr){4-6}\cmidrule(lr){7-10}
+Pipeline & Returned & Failed & Rect.\ cross. & FOV cross. & $\rho\le1$ & ${-}\log\rho$ & Inlier ratio & Fused & Detector & RANSAC \\
+\midrule
+\xf{}   & 625 & 342 & 2/2   & 1/1   & 20/21 & .778\ci{\numXfClrCI} & \numXfInlAUROC\ci{\numXfInlCI} & \numXfComboAUROC\ci{\numXfFusedCI} & .833 & \numRansacXf \\
+\splg{} & 618 & 278 & 10/10 & 6/6   & 40/40 & .823\ci{\numSpClrCI} & \numSpInlAUROC\ci{\numSpInlCI} & \numSpComboAUROC\ci{\numSpFusedCI} & .838 & \numRansacSp \\
+\sr{}   & \numSrReturned & \numSrFailed & \numSrRect & \numSrFov & \numSrRho & \numSrClrAUROC\ci{\numSrClrCI} & \numSrInlAUROC\ci{\numSrInlCI} & \numSrComboAUROC\ci{\numSrFusedCI} & -- & \numRansacSr \\
+\midrule
+\sift{} & 521 & 519 & 375/375 & 187/187 & 412/412 & -- & -- & -- & -- & \numRansacSift \\
+\bottomrule
+\end{tabular}
+\vspace{-2mm}
+\end{table*}
+
+A homography is a rational map. Where its projective denominator changes sign
+it sends image points through infinity and reverses orientation, a
+\emph{fold}: in a fundus overlay, the moving image is torn along the pole line
+and the part beyond it is mirrored onto the far side. Close to that line its
+derivatives are unbounded. RANSAC scores reprojection consensus, and the
+returned matrix is finite. Robust-estimation frameworks test sample and model
+degeneracy \cite{usac}, and Moisan et al.\ reject ``wild homographies'' by
+enforcing orientation preservation at the four sample points \cite{moisan};
+both constrain the sample, not the support the warp is applied to.
+
+\textbf{Contributions.} (1) An audit of three modern retinal pipelines on
+FIRE and COph100 \cite{fire,coph}, including the released \sr{}: every
+observed pole crossing is a failure, a quarter of them silent. (2) Pole
+clearance as a QC score. Poles and the rectangle test are not new; we give
+exact tests for the rectangular, circular, and convex supports a warp is
+applied to, normalize the pole distance into a continuous, unit-free
+clearance, and measure it against inlier ratio, projective baselines, and a
+learned detector. (3) A calibration caveat: unbounded homography-derived
+features can reverse Platt calibration of learned QC, and a guard must
+contain the feature's support.
+
+\section{Method}
+\label{sec:method}
+
+\textbf{Pole and folding.} A homography $H$ maps $(x,y)$ to
+\begin{equation}
+u=\frac{h_{11}x+h_{12}y+h_{13}}{d},\quad
+v=\frac{h_{21}x+h_{22}y+h_{23}}{d},
+\label{eq:h}
+\end{equation}
+with denominator $d(x,y)=h_{31}x+h_{32}y+h_{33}$ and Jacobian determinant
+$\det J(x,y)=\det H/d(x,y)^3$ \cite{hartley}. Hence $\det J$ changes sign
+exactly where $d$ does: the pole line $d=0$ is the fold, and $|\det J|$, like
+every higher derivative, diverges as $d\to0$.
+
+\textbf{Exact support tests.} Because $d$ is affine, its extrema on an
+axis-aligned rectangle lie at the four corners $c_k$, so the pole crosses the
+closed rectangle if and only if
+\begin{equation}
+\min_k d(c_k)\le0\le\max_k d(c_k).
+\label{eq:corner}
+\end{equation}
+\emph{Remark}: this is the algebraic form of the common check that the projected corners
+form a convex quadrilateral with the source orientation: a corner triangle's
+image orientation is $\mathrm{sign}(\det H)\,\mathrm{sign}(d_id_jd_k)$, so
+the two agree unless a corner lies on the pole. Unlike the projected check,
+Eq.~(\ref{eq:corner}) extends to any convex support, such as a fundus mask's
+convex hull, by evaluating $d$ at its vertices (for a non-convex mask this is
+conservative). For a circular field of view (FOV) with center $q$ and radius $r$, with
+$a=(h_{31},h_{32})$, the condition is $|a^\top q+h_{33}|\le r\lVert
+a\rVert_2$; we use the image's inscribed circle as the FOV proxy. $H$
+(Frobenius-normalized, so $h_{33}=0$ is allowed) maps moving to fixed image
+and is tested on the moving support; QC scores use $H$ only, and $H^{-1}$ on
+the fixed image is reported separately.
+
+\textbf{Clearance.} For a non-crossing rectangle with diagonal $L$,
+\begin{equation}
+\rho(H)=\min_k|d(c_k)|\,/\,\bigl(L\lVert a\rVert_2\bigr)
+\label{eq:clearance}
+\end{equation}
+is the distance from the image to the pole line in image diagonals ($\rho=1$:
+the pole is one diagonal away); $\rho=0$ for a crossing and $\rho=\infty$ for
+an affine map. It is invariant to matrix scale and image resolution.
+
+\textbf{Uses.} (i) \emph{QC score}: $s=-\log_{10}\max(\rho,10^{-3})$, with
+$\rho$ capped at $10^{3}$. The \emph{fused} score averages the empirical
+percentiles of $s$ and of the negated RANSAC inlier ratio, each percentile
+map estimated on non-test groups only (cross-fitted over the five group folds
+of Sec.~\ref{sec:setup}), so a new case is scored alone; no label is used. (ii) \emph{Feature guard}: a derivative feature is set missing when
+the pole crosses the support on which it is computed. (iii)
+\emph{Support-constrained RANSAC}: minimal-sample hypotheses whose pole
+crosses the support are discarded before consensus scoring, on the same
+random stream; if the consensus refit crosses, the best admissible hypothesis
+is returned, and if none exists the registration fails explicitly.
+
+\section{Experimental setup}
+\label{sec:setup}
+
+\textbf{Data and endpoint.} We use 134 FIRE \cite{fire} and 491 COph100
+\cite{coph} pairs, grouped into 42 image-connected FIRE components (patient
+identifiers are unavailable) and 56 COph100 patients. A registration fails if
+it returns no transform (an \emph{explicit} failure) or its mean landmark
+error exceeds 0.005 of the fixed-image diagonal in original coordinates (a
+\emph{silent} failure): 20.6 pixels on FIRE ($2912^2$), within its standard
+0--25-pixel success curve, and 4 pixels on COph100 ($640\times480$).
+
+\textbf{Pipelines.} The generic (not retina-specific) pipelines \xf{},
+\splg{}, and \sift{} match XFeat \cite{xfeat},
+SuperPoint/LightGlue \cite{lightglue}, or SIFT \cite{sift} correspondences at
+a 1,024-pixel long edge (COph100 upsampled $1.6\times$) and share one seeded
+RANSAC with a normalized DLT (3-px threshold, $10^4$ iterations, consensus
+refit). \sr{} is run as released (least-median-of-squares, LMedS, with its two-pass
+refinement) at
+original resolution \cite{superretina}; it reproduces the published FIRE
+success-curve AUCs of the S/P/A (large-overlap/small-overlap/anatomical-change)
+categories within \numSrFireDiff.
+
+\textbf{Learned detector.} Per pipeline, an L2-regularized logistic
+regression combines image, match, inverse-consistency, geometric (including
+bending energy $\mathcal{B}$ on a $32\times32$ lattice, our curvature
+feature), cross-pipeline, and structure features (Base); a second arm adds
+resampling and perturbation stability (+Stab). Features are standardized
+after training-median imputation with one missingness indicator each, and
+$C\in\{0.1,1,10\}$ is chosen by grouped inner cross-validation. Platt scaling
+\cite{platt}, an unregularized logistic fit of the raw score, uses a disjoint
+calibration fold; a negative slope reverses the ranking. With five group
+folds (test $f$, calibration $f{+}1$, training the rest), we refit everything
+under 21 seeded group-to-fold assignments and pool test predictions with
+equal total weight per patient group. Assignment spread reuses cases and is
+not a confidence interval; intervals are 95\% group bootstraps (2,000
+resamples of patients or components) on the original assignment. No-output
+pairs receive the most-failing value of every training-free score.
+
+\section{Results}
+\label{sec:results}
+
+
+\subsection{Pole crossings are failures, often silent}
+
+All 12 crossings by the generic matchers are failures
+(Table~\ref{tab:audit}). \sr{} with its own LMedS returns \numSrRectCount{} crossing
+homographies, all failures;
+\numSrZeroInlier{} have no LMedS inliers, which its evaluation counts as
+failed, but 13 would pass silently. Testing $H^{-1}$ on the fixed image adds
+\numInverseOnly{} \splg{} crossings (\numInverseOnlyFailed{} failed); none of
+the estimates is a global reflection. The projected-corner check flags the
+same crossings, as it must; the $32\times32$ lattice $\det J$ test costs 256
+times more and misses \numSampledMissesSift{} \sift{} crossings. Under weak
+matching, invalid geometry is common: 72\% of \sift{} homographies cross the
+image. Crossings alone have low recall (12 of 620 generic-matcher failures);
+the clearance extends them: within one diagonal, 60 of 61 generic-matcher and
+all 107 \sr{} estimates fail (Fig.~\ref{fig:clearance}b). All crossings fail
+up to 0.01 of the diagonal and \numCrossFailLoose{} at 0.02. That crossings
+fold is a mathematical fact; that they all fail is an observation on these
+data, and the events are not independent: \numGenericCrossTop{} of the
+\numGenericCross{} generic-matcher crossings come from one patient (055) of
+\numGenericCrossGroups{}, and \sr{}'s span \numSrPoleGroups{} patients with at
+most \numSrCrossMax{} each. No FIRE pair crosses, against
+\numCophGenericRate{} (generic) and \numCophSrRate{} (\sr{}) of COph100 pairs;
+adult and infant cohorts also differ in camera and resolution.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{assets/clearance_qc.pdf}
+\vspace{-6mm}
+\caption{(a) Lowest AUROC over the three pipelines as the failure endpoint
+varies (dashed: study endpoint). (b) Clearance of all returned \xf{} and
+\splg{} estimates; $\le\!-2$ holds the 12 crossings. Dashed: $\rho=1$, left
+of which 60/61 estimates fail.}
+\label{fig:clearance}
+\vspace{-3mm}
+\end{figure}
+
+\subsection{Clearance is a training-free QC score}
+
+${-}\log\rho$ is weaker than inlier ratio on \xf{} and stronger on \splg{}
+and \sr{} (Table~\ref{tab:audit}). The two are complementary: the fused score
+exceeds inlier ratio on \splg{} and \sr{} (paired 95\% intervals of the AUROC
+difference \numSpFusedInlDiff{} and \numSrFusedInlDiff) but not on \xf{}
+(\numXfFusedInlDiff), and is at most \numFusedDetMargin{} AUROC below the
+learned detector (paired intervals \numXfFusedDetDiff, \numSpFusedDetDiff).
+$\rho$ is not carried by the crossings: on estimates with $\rho>1$ it reaches
+\numFarClr{} (\xf{}/\splg{}/\sr{}) versus \numFarInl{} for inlier ratio, and
+no AUROC moves by more than \numReturnedShift{} on returned transforms only.
+Any measure of how projective $H$ is ranks like $\rho$: the pole distance
+from the image center and the corner deviation from $H$'s best affine fit
+agree within $\pm$\numClrAffineBound{} (paired intervals), while the condition
+number (\numCondAUROCRange) and warped-area scale (0.68/0.70 on \xf{}/\splg{})
+are weaker. The support thus matters for the crossing decision and the unit
+threshold, not for ranking. Flagging $\rho\le\tau$ with $\tau$ chosen on
+training groups for $\ge$95\% precision keeps \numNestedPrecision{} held-out
+precision at \numNestedRecall{} recall (median $\tau=\numNestedTau$
+diagonals). Across endpoints (Fig.~\ref{fig:clearance}a), $\rho$ improves on
+\splg{} and \sr{} but falls on \xf{}, whose near-pole estimates are often
+only moderately wrong, and inlier ratio degrades on \splg{}; the fused score's
+lowest AUROC is \numSensMinFused{}, versus \numSensMinClr{} and
+\numSensMinInl{}.
+
+\subsection{Poles can destabilize learned calibration}
+
+Raw homography-derived curvature can reverse a detector's Platt calibration;
+here every reversal traces to one patient's poles. In one held-out fold
+(\xf{}, +Stab, original assignment), the raw detector ranks failures well
+(AUROC 0.927), but its Platt slope is $-4.3\times10^{-5}$, compressing all 83
+test probabilities into $[0.57961,0.57970]$ and reversing them (0.073). The
+calibration fold held the two patient-055 poles of Fig.~\ref{fig:poles},
+whose bending energies ($8.65\times10^{9}$, $1.05\times10^{9}$) lie far
+outside the training range; deleting both restores the fit, deleting either
+does not. All 20 reversals over 21 assignments have patient-055 poles in the
+calibration fold, so they repeat one mechanism rather than adding evidence.
+The cause is geometric: moving a synthetic pole from $\rho=1$ to $10^{-3}$
+outside a $640\times480$ image raises lattice bending energy from 5.53 to
+$2.13\times10^{7}$.
+
+\begin{table}[t]
+\centering\small
+\caption{Calibration over 21 assignments. Reversals (105 folds per cell) for
+the Base/+Stab arms; \xf{} Base calibrated AUROC and Brier score as median
+(worst assignment). Curvature and guard supports are crossed; ``none'' is
+unguarded. The last rows agree to three decimals but differ per case.
+\splg{} worst Brier: .175 raw, .167 guarded.
+$^{\dagger}$One fit with an optimizer warning.}
+\label{tab:guard}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{llcccc}
+\toprule
+Curv. & Guard & \multicolumn{2}{c}{Reversals} & \multicolumn{2}{c}{\xf{} Base} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}
+supp. & supp. & \xf{} & \splg{} & AUROC & Brier \\
+\midrule
+Rect. & none  & $13^{\dagger}$/6 & 1/0 & .787 & .180 (.206) \\
+Rect. & FOV   & $13^{\dagger}$/6 & 1/0 & .788 & .180 (.207) \\
+FOV   & none  & 11/6 & 0/0 & .802 & .178 (.207) \\
+Rect. & Rect. & 0/0 & 0/0 & .828 & .169 (.179) \\
+\midrule
+\multicolumn{2}{l}{FOV/FOV, log, drop} & 0/0 & 0/0 & .828 & .169 (.181) \\
+\bottomrule
+\end{tabular}
+\vspace{-3mm}
+\end{table}
+
+Raw derivative features combined with Platt scaling are therefore fragile.
+Guarding, log-transforming, or dropping them prevents every reversal and lowers
+the worst-assignment Brier score (Table~\ref{tab:guard}); clipping and
+quantile transforms behave alike, and isotonic calibration \cite{isotonic}
+prevents reversal but raises the median NLL to 0.97 (0.51 guarded). A guard must
+contain the feature's support: sampling curvature only inside the FOV leaves
+17 reversals, because the pole can cross the FOV itself, and an FOV guard on
+rectangle-sampled curvature removes none, because a pole can clip the
+rectangle while missing the FOV (Fig.~\ref{fig:poles}a); over-guarding is
+harmless. Once the poles are neutralized, curvature adds little signal. The
+guard's value is diagnostic: it keeps curvature where it is valid and
+records the pole as an explicit flag, which marked a failure in all 100
+observed crossings, whereas removal and monotone transforms hide it.
+
+\subsection{Support-constrained RANSAC}
+
+Moisan's sample-point test \cite{moisan} still returns \numMoisanLeft{}
+crossings; the support constraint returns none, but fold-free is not
+error-free: it rescues none of the 12 generic-matcher pole cases and, under
+weak matching, turns explicit failures into wrong estimates
+(Table~\ref{tab:audit}), so its output still needs QC.
+
+\section{Discussion and conclusion}
+\label{sec:conclusion}
+
+A finite homography is not necessarily a valid warp on the fundus: if its
+pole intersects the support, the map is singular there and folds. Released
+retinal pipelines return such homographies, some silently, and in our
+experiments every one was a registration failure. A few denominator
+evaluations detect them exactly on rectangular, circular, or convex supports,
+and the clearance turns the same quantity into a training-free QC score that
+adds to inlier ratio; fused, it comes within \numFusedDetMargin{} AUROC of a
+learned detector without training. Learned QC should guard, transform, or
+drop homography-derived derivative features; a support-containing guard
+additionally keeps the pole as an explicit flag. Constraining RANSAC removes
+folds but not errors. We recommend these checks as low-cost safeguards in
+homography-based retinal registration: reject pole-crossing estimates, report
+$\rho$ alongside the inlier ratio, and guard derivative features on their
+evaluation support. The study is limited to two
+public retinal datasets, generic-matcher poles from four patients
+(\sr{}'s span \numSrPoleGroups), FIRE groups that may share unobserved
+patients, and homographies. Quadratic retinal models \cite{can,gdbicp} and
+eye-model registration \cite{rempe} have no projective denominator;
+homographies persist in learned pipelines because they are estimable from
+four points, and they are applied even to infant retinopathy-of-prematurity
+imaging, where all poles of the three modern pipelines in our data occur.
+
+\section{Compliance with Ethical Standards}
+\label{sec:ethics}
+
+This research study was conducted retrospectively using human subject data
+made available in open access by FIRE \cite{fire}, RIDIRP \cite{ridirp}, and
+COph100 \cite{coph}. FIRE reports written informed consent; RIDIRP reports
+consent and approval by the Ethical Committee of University Hospital Ostrava
+(544/2018). Ethical approval was not required for this secondary analysis,
+which used only the publicly released, de-identified data; no new participant
+data were collected.
+
+\section{Acknowledgments}
+\label{sec:acknowledgments}
+
+No external funding; the author declares no conflicts of interest. Anthropic
+Claude and OpenAI Codex generated parts of the analysis code (Sections 3--4)
+and assisted with drafting and editing Sections 1--5; the author verified all
+code, numbers, citations, and text. Code and per-case results:
+\url{https://github.com/Felix-Bergmann-Code/silent-folds}.
+
+\vspace{-1mm}
+\bibliographystyle{IEEEbib}
+\bibliography{refs}
+
+\end{document}

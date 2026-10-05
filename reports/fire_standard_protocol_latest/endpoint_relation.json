@@ -1,0 +1,9 @@
+{
+  "fire_width_px": 2912,
+  "fire_height_px": 2912,
+  "diagonal_px": 4118.189893630452,
+  "paper_endpoint_diagonal_fraction": 0.005,
+  "paper_endpoint_px": 20.590949468152264,
+  "fire_curve_maximum_px": 25.0,
+  "undefined_registration_policy": "unsuccessful at every threshold"
+}

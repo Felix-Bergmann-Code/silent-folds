@@ -1,0 +1,17 @@
+# Constraints verified in the isolated CPU evaluation environment.
+# Install with: python -m pip install -c requirements-eval.lock -e '.[dev]'
+numpy==1.26.4
+scipy==1.11.4
+pandas==2.1.4
+pyarrow==14.0.2
+PyYAML==6.0.3
+scikit-learn==1.3.2
+# 4.7.0 crashes in DatasetSetField on the small grouped secondary-learner fixture
+# on this Windows workstation; 4.6.0 passes the complete fitting path.
+lightgbm==4.6.0
+threadpoolctl==3.6.0
+scikit-image==0.22.0
+Pillow==10.1.0
+pytest==7.4.4
+pytest-cov==4.1.0
+ruff==0.6.9

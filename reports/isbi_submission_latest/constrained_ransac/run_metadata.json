@@ -1,0 +1,17 @@
+{
+  "experiment": "constrained_ransac",
+  "variants": [
+    "none",
+    "sample_orientation",
+    "rectangle",
+    "fov"
+  ],
+  "pipelines": [
+    "xfeat_h",
+    "sp_lg_h",
+    "sift_h"
+  ],
+  "cases": 1875,
+  "limit": null,
+  "seconds": 309.3962025642395
+}

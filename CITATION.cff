@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the paper below."
+title: "Silent Folds: code and results"
+authors:
+  - family-names: Bergmann
+    given-names: Felix
+    affiliation: University of Amsterdam
+license: MIT
+doi: "10.5281/zenodo.23068903"
+repository-code: "https://github.com/Felix-Bergmann-Code/silent-folds"
+preferred-citation:
+  type: conference-paper
+  title: "Silent Folds: Projective Poles as a Training-Free Failure Flag in Homography-Based Retinal Registration"
+  authors:
+    - family-names: Bergmann
+      given-names: Felix
+      affiliation: University of Amsterdam
+  collection-title: "IEEE International Symposium on Biomedical Imaging (ISBI)"
+  year: 2027
+  notes: "Submitted"

@@ -1,0 +1,3 @@
+pipeline,pipeline_label,valid_reference_pairs,returned_homographies,poles,poles_over_10_px,high_error_cases,high_error_cases_flagged
+sp_lg_h,SP/LG-H,579,578,7,7,28,7
+xfeat_h,XFeat-H,579,579,10,10,48,10
